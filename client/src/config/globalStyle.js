@@ -1,14 +1,37 @@
 import { createGlobalStyle } from "styled-components";
 
-import robotoBold from "../fonts/Roboto/Roboto-Bold.ttf";
+import robotoThink from "../fonts/Roboto/Roboto-Thin.ttf";
+import robotoLight from "../fonts/Roboto/Roboto-Light.ttf";
+import robotoRegular from "../fonts/Roboto/Roboto-Regular.ttf";
 
 export default createGlobalStyle`
     @font-face {
-        font-family: 'RobotoBold';
-        src: local('RobotoBold'), local('RobotoBold'),
-        url(${robotoBold}) format('ttf'),
-        url(${robotoBold}) format('woff');
-        font-weight: 400;
+        font-family: 'robotoThink';
+        src: url(${robotoThink}) format('truetype');
+        font-weight: normal;
         font-style: normal;
-    };   
+    };
+    
+    @font-face {
+        font-family: 'robotoLight';
+        src: url(${robotoLight}) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    };
+
+    @font-face {
+        font-family: 'robotoRegular';
+        src: url(${robotoRegular}) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    };
+
+    *,
+    ::after,
+    ::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        line-height: 1;
+    }
 `;

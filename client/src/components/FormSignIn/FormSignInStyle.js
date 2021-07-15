@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import bitmapImg from "../../images/Bitmap.jpg";
 
-const FormSignUpWrapper = styled.div`
+const FormSignInWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@ const FormSignUpWrapper = styled.div`
       @media screen and (max-width: 370px) {
         padding: 50px 10px;
       }
-      .signUpTop {
+      .signInTop {
         width: 100%;
         margin-bottom: 24px;
 
@@ -54,7 +54,7 @@ const FormSignUpWrapper = styled.div`
         }
       }
 
-      .signUpHeader {
+      .signInHeader {
         margin-bottom: 40px;
         font-family: robotoRegular, sans-serif;
         line-height: 28px;
@@ -69,12 +69,30 @@ const FormSignUpWrapper = styled.div`
         }
       }
 
-      .signUpForm {
+      .signInForm {
         .form {
-          .signUpSubmit {
+          .signInSubmit {
             width: 100%;
             height: 40px;
             background: #1665d8;
+          }
+        }
+        .login {
+          margin-top: 25px;
+          padding-top: 25px;
+          border-top: 1px dashed rgb(216, 216, 216);
+          .loginWith {
+            width: 100%;
+            height: 40px;
+            margin: 5px 0;
+          }
+          .loginWithGoogle {
+            background-color: rgb(221, 75, 57);
+          }
+          .loginWithFacebook {
+            width: 100%;
+            height: 40px;
+            background-color: rgb(59, 89, 152);
           }
         }
       }
@@ -86,12 +104,6 @@ const FormSignUpWrapper = styled.div`
       background: url(${bitmapImg}) no-repeat center center;
 
       .introduction {
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        justify-align: end;
-        align-items: end;
-        align-content: end;
         width: 100%;
         height: 100%;
         padding: 24px 18px;
@@ -135,4 +147,4 @@ const FormSignUpWrapper = styled.div`
   }
 `;
 
-export default FormSignUpWrapper;
+export default FormSignInWrapper;

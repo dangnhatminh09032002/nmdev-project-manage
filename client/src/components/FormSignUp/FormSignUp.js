@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FormSignUpWrapper from "./FormSignUpStyle";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -9,7 +8,9 @@ import {
   Button,
 } from "@material-ui/core";
 
+import FormSignUpWrapper from "./FormSignUpStyle";
 import arrowRightIcon from "../../images/icon/arrow-right.svg";
+import imageOval from "../../images/Oval.jpg";
 
 export default class FormSignUp extends Component {
   render() {
@@ -21,20 +22,23 @@ export default class FormSignUp extends Component {
               <div className="signUpTop">
                 <ul>
                   <li>
-                    <Link>
+                    <Link to="/signin">
                       <img src={arrowRightIcon}></img>
                     </Link>
                     <span>Go back</span>
                   </li>
                   <li>
                     <span>
-                      Have an account? <Link>Sign In</Link>
+                      Have an account? <Link to="/signin">Sign In</Link>
                     </span>
                   </li>
                 </ul>
               </div>
             </Grid>
-            <div className="signUpHeader"></div>
+            <div className="signUpHeader">
+              <h2>Sign up to NMDev</h2>
+              <p>Sign up on the internal platform</p>
+            </div>
             <div className="signUpForm">
               <form className="form">
                 <Grid container spacing={2}>
@@ -108,7 +112,19 @@ export default class FormSignUp extends Component {
             </div>
           </div>
           <div className="right">
-            <div className="introduction"></div>
+            <div className="introduction">
+              <div>
+                <img src={imageOval}></img>
+                <ul>
+                  <li>Takamaru Ayako</li>
+                  <li>Manager an inVision</li>
+                </ul>
+              </div>
+              <p>
+                Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
+                they sold out High Life.
+              </p>
+            </div>
           </div>
         </div>
       </FormSignUpWrapper>

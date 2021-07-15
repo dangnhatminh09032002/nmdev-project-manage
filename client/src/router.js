@@ -21,7 +21,7 @@ const RestrictedRoute = ({
 function PublicRoutes({ isLoggedIn }) {
   return (
     <Switch>
-      <Route exact path="/" component={SignIn} />
+      <Route exact path="/signin" component={SignIn} />
       <Route exact path="/signup" component={SignUp} />
       {/* <RestrictedRoute component={}/> */}
     </Switch>
