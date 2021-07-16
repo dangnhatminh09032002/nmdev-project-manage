@@ -1,5 +1,6 @@
-import Auth from "./auth/reducer";
+import auth from "./auth/reducer";
+import app from "./app/reducer";
 
-const reducers = { Auth };
+const reducers = { auth, app };
 
 export default reducers;

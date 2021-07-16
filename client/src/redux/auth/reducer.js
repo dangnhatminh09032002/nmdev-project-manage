@@ -1,15 +1,18 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 import authAction from "./actions";
-const { login } = authAction;
+const { loginRequest } = authAction;
 
-const initAuth = {};
-const loginCase = (state, action) => {
-  console.log("login request");
+const initAuth = {
+  isAuthing: "flase",
+  isLoggedIn: false,
+  token: "",
 };
 
+const loginCase = (state, action) => {};
+
 const authReducer = createReducer(initAuth, (builder) => {
-  builder.addCase(login, loginCase);
+  builder.addCase(loginRequest, loginCase);
 });
 
 export default authReducer;

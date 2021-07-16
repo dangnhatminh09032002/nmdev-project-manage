@@ -2,39 +2,56 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-// require("./configs/passportConfig");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const csurf = require("csurf");
+require("./db/mongodb");
+const setapProxy = require("./setupProxy");
 
-const { PORT = 3001 } = process.env;
+const {
+  //static
+  PORT = 3001,
+  SECRET = "secret",
+  NODE_ENV = "development",
+  //csurf
+  CSRF_KEY = "_csurf", // session name = Set ID
+  CSRF_LIFETIME = 1000 * 60 * 60 * 2, // Two hour
+} = process.env;
+
+const IN_PROD = NODE_ENV === "production" || false;
 
 const app = express();
+
+//Proxy
+setapProxy(app);
+
 // Midlleware config
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*" }));
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-require("./configs/passportConfig");
-
-app.get(
-  "/",
-  passport.authenticate("google", { scope: ["profile"] }),
-  (req, res) => {
-    res.redirect("/home");
-  }
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  csurf({
+    cookie: {
+      key: CSRF_KEY,
+      httpOnly: false,
+      maxAge: CSRF_LIFETIME,
+      secure: IN_PROD,
+    },
+  })
 );
-app.get("/home", (req, res) => {
-  res.json("Hello World! Welcome to home");
-});
 
-app.get(
-  "/test",
-  passport.authenticate("google", { failureRedirect: "/home" }),
-  (req, res) => {
-    res.send("Welcome to test page!");
-  }
-);
+const authRoute = require("./routes/auth");
+app.use("/auth", authRoute);
 
 app.listen(PORT, () => {
   console.log("listening on port " + PORT);

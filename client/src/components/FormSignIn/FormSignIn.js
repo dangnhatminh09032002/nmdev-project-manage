@@ -13,6 +13,15 @@ import arrowRightIcon from "../../images/icon/arrow-right.svg";
 import imageOval from "../../images/Oval.jpg";
 
 export default class FormSignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmitWithGoogle = this.handleSubmitWithGoogle.bind(this);
+  }
+
+  handleSubmitWithGoogle() {
+    this.props.loginRequest();
+  }
+
   render() {
     return (
       <FormSignInWrapper>
@@ -84,6 +93,7 @@ export default class FormSignIn extends Component {
               <Grid item xs={12} className="login">
                 <Grid item xs={12}>
                   <Button
+                    onClick={this.handleSubmitWithGoogle}
                     className="loginWith loginWithGoogle"
                     type="submit"
                     fullWidth
