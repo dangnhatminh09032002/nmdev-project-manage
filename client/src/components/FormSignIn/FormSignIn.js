@@ -7,19 +7,57 @@ import {
   Checkbox,
   Button,
 } from "@material-ui/core";
+import validator from "validator";
+import { throttle } from "throttle-debounce";
 
 import FormSignInWrapper from "./FormSignInStyle";
 import arrowRightIcon from "../../images/icon/arrow-right.svg";
 import imageOval from "../../images/Oval.jpg";
 
+const throttleHandleChange = throttle(1000, false, (cb) => {
+  cb();
+});
+
 export default class FormSignIn extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isEmailError: false,
+      email: "",
+      password: "",
+    };
     this.handleSubmitWithGoogle = this.handleSubmitWithGoogle.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmitWithGoogle() {
-    this.props.loginRequest();
+    window.open("/auth/google", "_blank");
+    // this.props.loginRequest();
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
+  handleEmailChange(e) {
+    let email = e.target.value;
+    throttleHandleChange(() => {
+      let isEmail = validator.isEmail(email);
+      if (isEmail) {
+        this.setState({ isEmailError: false, email });
+      } else {
+        this.setState({ isEmailError: true });
+      }
+    });
+  }
+
+  handlePasswordChange(e) {
+    let password = e.target.value;
+    throttleHandleChange(() => {
+      this.setState({ password });
+    });
   }
 
   render() {
@@ -48,6 +86,8 @@ export default class FormSignIn extends Component {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
+                      error={this.state.isEmailError}
+                      onChange={this.handleEmailChange}
                       variant="outlined"
                       required
                       fullWidth
@@ -60,6 +100,7 @@ export default class FormSignIn extends Component {
                   <Grid item xs={12}>
                     <TextField
                       variant="outlined"
+                      onChange={this.handlePasswordChange}
                       required
                       fullWidth
                       name="password"
@@ -79,6 +120,7 @@ export default class FormSignIn extends Component {
                   </Grid>
                   <Grid item xs={4}>
                     <Button
+                      onClick={this.handleSubmit}
                       className="signInSubmit"
                       type="submit"
                       fullWidth

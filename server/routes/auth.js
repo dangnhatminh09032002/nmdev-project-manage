@@ -15,6 +15,7 @@ authRoute.get(
   "/google/success",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
+    res.redirect("http://localhost:3000/signin");
     res.json(req.user);
   }
 );

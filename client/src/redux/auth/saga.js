@@ -2,7 +2,7 @@ import { all, takeEvery, fork } from "redux-saga/effects";
 
 function* loginRequest() {
   yield takeEvery("LOGIN_REQUEST", function* () {
-    yield fetch("http://localhost:3001/auth/google", {
+    yield fetch("http://localhost:4000/auth/google", {
       method: "GET",
       credentials: "include",
       headers: {

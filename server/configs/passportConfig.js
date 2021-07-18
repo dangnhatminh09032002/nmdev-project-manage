@@ -20,9 +20,10 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/success",
+      callbackURL: "http://localhost:4000/auth/google/success",
     },
-    function async(accessToken, refreshToken, profile, done) {
+    function async(req, accessToken, refreshToken, profile, done) {
+      console.log(req);
       User.findOne({ googleId: profile.id }).then((currentUser) => {
         if (currentUser) {
           done(null, currentUser);

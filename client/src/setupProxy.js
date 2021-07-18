@@ -2,12 +2,13 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
   app.use(
-    createProxyMiddleware({
-      target: "http://localhost:3001",
+    "/auth",
+    createProxyMiddleware("/auth", {
+      target: "http://localhost:4000",
       changeOrigin: true,
     }),
-    (req, res) => {
-      res.json({ name: "Minh" });
+    (req, res, next) => {
+      res.json({ name: "Hello" });
     }
   );
 };

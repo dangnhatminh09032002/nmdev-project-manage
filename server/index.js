@@ -6,11 +6,10 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 require("./db/mongodb");
-const setapProxy = require("./setupProxy");
 
 const {
   //static
-  PORT = 3001,
+  PORT = 4000,
   SECRET = "secret",
   NODE_ENV = "development",
   //csurf
@@ -22,15 +21,13 @@ const IN_PROD = NODE_ENV === "production" || false;
 
 const app = express();
 
-//Proxy
-setapProxy(app);
+app.use(morgan("dev"));
 
 // Midlleware config
-app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
@@ -52,6 +49,9 @@ app.use(
 
 const authRoute = require("./routes/auth");
 app.use("/auth", authRoute);
+
+// error 204
+// app.use(middlewares.notFound);
 
 app.listen(PORT, () => {
   console.log("listening on port " + PORT);

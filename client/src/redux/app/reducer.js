@@ -6,7 +6,7 @@ const { changeView, changeCollaps, toggleDraw } = appAction;
 const initApp = {
   view: getView(window.innerWidth),
   openDrawer: getView(window.innerWidth) === "desktopView" ? false : true,
-  collapsed: getView(window.innerWidth) === "mobileView" ? "hidden" : "block",
+  collapsed: getView(window.innerWidth) === "mobileView" ? "none" : "block",
 };
 
 const changeViewCase = (state, action) => {
