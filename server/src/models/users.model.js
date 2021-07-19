@@ -5,14 +5,16 @@ const url = process.env.URL_MONGODB;
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-  googleId: String,
+const usersSchema = new Schema({
+  id: String,
   displayName: String,
   name: { type: Object },
   picture: String,
   locale: String,
   provider: String,
+  email: String,
+  email_verified: Boolean,
 });
 
-const User = mongoose.model("User", userSchema);
-module.exports = { User };
+const Users = mongoose.model("User", usersSchema);
+module.exports = { Users };

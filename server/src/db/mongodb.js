@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const chalk = require("chalk");
 const url = process.env.URL_MONGODB;
 module.exports = mongoose
   .connect(url, {
@@ -8,5 +8,5 @@ module.exports = mongoose
     useFindAndModify: true,
     useCreateIndex: false,
   })
-  .then(() => console.log("Database connected!"))
+  .then(() => console.log(chalk.green("Database connected!")))
   .catch((err) => console.log(err));

@@ -1,17 +1,17 @@
 require("dotenv").config();
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const { User } = require("../models/user.model");
+const { Users } = require("../models/users.model");
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 
 passport.serializeUser((user, done) => {
-  done(null, user.googleId);
+  done(null, user.id);
 });
 
-passport.deserializeUser((googleId, done) => {
-  User.findById(googleId, (err, user) => {
-    done(null, user);
+passport.deserializeUser((id, done) => {
+  Users.findById(id, (err, user) => {
+    done(null, false);
   });
 });
 
@@ -23,22 +23,23 @@ passport.use(
       callbackURL: "http://localhost:4000/auth/google/success",
     },
     function async(req, accessToken, refreshToken, profile, done) {
-      console.log(req);
-      User.findOne({ googleId: profile.id }).then((currentUser) => {
+      Users.findOne({ id: profile.id }).then((currentUser) => {
         if (currentUser) {
           done(null, currentUser);
         } else {
-          new User({
-            googleId: profile.id,
+          new Users({
+            id: profile.id,
             displayName: profile.displayName,
             name: profile.name,
             picture: profile._json.picture,
             locale: profile._json.locale,
             provider: profile.provider,
+            email: profile._json.email,
+            email_verified: profile._json.email_verified,
           })
             .save()
             .then((newUser) => {
-              done(null, currentUser);
+              done(null, newUser);
             });
         }
       });
