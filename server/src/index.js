@@ -7,12 +7,13 @@ const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 const session = require("express-session");
+const path = require("path");
 require("./db/mongodb");
 
 //import Route
 const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
 const apiRouter = require("./routes/api");
+const profileRouter = require("./routes/profile");
 
 // Import ENV
 const {
@@ -32,7 +33,7 @@ const IN_PROD = NODE_ENV === "production" || false;
 const app = express();
 
 // Midlleware config
-app.use(morgan("dev"));
+if (NODE_ENV === "development") app.use(morgan("dev"));
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -69,9 +70,27 @@ app.use(
   })
 );
 
-app.use("/auth", authRouter);
-app.use("/user", userRouter);
+// Set global var
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null;
+  // res.locals.authenticated = !req.user.anonymous || null;
+  next();
+});
 
+// Static folder
+app.use(express.static(path.join(__dirname, "public")));
+
+const { ensureAuth } = require("./middlewares/authMiddleware");
+app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
+app.get("/login", (req, res, next) => {
+  console.log("--GET /login: ", JSON.stringify(res.locals));
+  res.send(req.user);
+});
+// app.route("/user").get((req, res, next) => {
+//   console.log("GET /login: ", req.cookies);
+//   res.send("welcome to page user: ");
+// });
 // error 204
 // app.use(middlewares.notFound);
 

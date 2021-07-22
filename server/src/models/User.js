@@ -5,7 +5,7 @@ const url = process.env.URL_MONGODB;
 
 const { Schema } = mongoose;
 
-const usersSchema = new Schema({
+const userSchema = new Schema({
   id: String,
   displayName: String,
   name: { type: Object },
@@ -16,5 +16,5 @@ const usersSchema = new Schema({
   email_verified: Boolean,
 });
 
-const Users = mongoose.model("User", usersSchema);
-module.exports = { Users };
+const User = mongoose.model("User", userSchema);
+module.exports = { User };

@@ -1,12 +1,9 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
 require("../configs/passportConfig");
 const chalk = require("chalk");
 
 const authRouter = express.Router();
-
-authRouter.get("/login", (req, res) => {});
 
 authRouter.get(
   "/google",
@@ -17,10 +14,10 @@ authRouter.get(
   "/google/success",
   passport.authenticate("google", {
     failureRedirect: "/login",
-    successRedirect: "/user/login",
   }),
   (req, res) => {
-    res.redirect("/user/login");
+    res.locals.user = req.user;
+    res.redirect("/login");
   }
 );
 
